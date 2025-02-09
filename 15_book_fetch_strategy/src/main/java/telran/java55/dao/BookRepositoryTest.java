@@ -3,16 +3,16 @@ package telran.java55.dao;
 import static org.junit.jupiter.api.Assertions.*;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import telran.java55.model.Book;
 
-@DataJpaTest
-//@Transactional
+//@DataJpaTest
+@Transactional
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BookRepositoryTest {
 	
 	@Autowired
@@ -24,6 +24,7 @@ public class BookRepositoryTest {
 	@Test
 	void testAddBooks() {
 		bookRepository.addBooks();
+		em.flush();
 		
 		Book book = em.find(Book.class, "978-0-385-1233-5");
 		assertNotNull(book);
